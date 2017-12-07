@@ -3,6 +3,7 @@ var sqlite3 = require("sqlite3"); //Import sqlite3 so we can talk to the databas
 var bodyParser = require("body-parser"); //Import bodyParser so we can read request body data
 var uuid = require("uuid/v4"); //Import uuid so we can generate unique tokens
 var TransactionDatabase = require("sqlite3-transactions").TransactionDatabase; //Import sqlite3-transactions so we can use transactions with the database
+var path = require('path');
 
 var app = express();
 var db = new TransactionDatabase(new sqlite3.Database('./Jeopardy.db'));
@@ -46,8 +47,8 @@ function authMiddleware(req,res,next) {
 
 //Hello World Endpoint
 app.get("/", function(req,res) {
-	return res.send("Hello World");
-})
+  res.sendFile(path.join(__dirname + '/index.html'));
+});
 
 //Signin Endpoint
 app.post('/auth/signin', function(req, res) {
